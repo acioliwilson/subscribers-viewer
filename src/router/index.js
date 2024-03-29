@@ -15,6 +15,11 @@ const routes = [
     component: () => import('../views/LoginView.vue')
   },
   {
+    path: '/recover-account',
+    name: 'recover-account',
+    component: () => import('../views/RecoverAccount.vue')
+  },
+  {
     path: '/home',
     name: 'home',
     component: () => import('../views/HomeView.vue'),
