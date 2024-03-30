@@ -64,12 +64,14 @@
                     </div>
                     <span class="percentual mt-1">{{ newSubscribersCount }}% de 100%</span>
                     <button class="export-contacts" @click="exportContacts">Exportar Contatos</button>
-                    <!-- <a v-if="downloadLink" :href="downloadLink" download="contatos.csv">Baixar Arquivo CSV</a> -->
                 </div>
             </div>
             <div class="popup-toggle">
-                <button class="link-default" @click="hidePopup">
+                <button class="link-default" @click="hidePopup('66084f7849b117edf3a09175')" v-if="status.signup">
                     Desativar popup de assinaturas na página inicial.
+                </button>
+                <button class="link-default" @click="showPopup('66084f7849b117edf3a09175')" v-else>
+                    Mostrar popup de assinaturas na página inicial.
                 </button>
             </div>
         </div>
@@ -88,6 +90,7 @@ export default {
             users: [],
             loading: true,
             downloadLink: null,
+            status: {},
         }
     },
     async mounted() {
@@ -102,6 +105,8 @@ export default {
             console.error(error)
             this.loading = false
         }
+
+        this.getStatus()
     },
     methods: {
         logout() {
@@ -120,20 +125,6 @@ export default {
                 console.error(error);
             }
         },
-        // async exportContacts() {
-        //     try {
-        //         const response = await axios.get('https://subscribers-git-master-acioliwilson.vercel.app/export-subscribers')
-        //         const csvData = response.data
-        //         const blob = new Blob([csvData], {
-        //             type: 'text/csv'
-        //         });
-        //         const url = window.URL.createObjectURL(blob)
-        //         this.downloadLink = url
-        //     } catch (error) {
-        //         console.error('Erro ao exportar contatos:', error)
-        //         // Trate o erro conforme necessário
-        //     }
-        // },
         async exportContacts() {
             try {
                 const response = await axios.get('https://subscribers-git-master-acioliwilson.vercel.app/export-subscribers', {
@@ -150,6 +141,27 @@ export default {
                 console.error('Failed to export contacts:', error);
                 // Trate o erro adequadamente
             }
+        },
+        async hidePopup(id) {
+            await axios.put(`http://localhost:3000/status/${id}`)
+            .then((response) => {
+                this.$router.go('/home')
+                console.log(response)
+            }).catch(error => { console.error(error) })
+        },
+        async getStatus() {
+            const id = '66084f7849b117edf3a09175'
+            await axios.get(`http://localhost:3000/status/${id}`)
+            .then((response) => {
+                this.status = response.data
+            }) .catch(error => { console.error(error) })
+        },
+        async showPopup(id) {
+            await axios.put(`http://localhost:3000/status/${id}`)
+            .then((response) => {
+                this.$router.go('/home')
+                console.log(response)
+            }).catch(error => { console.error(error) })
         }
     },
     computed: {
