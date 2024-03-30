@@ -143,7 +143,7 @@ export default {
             }
         },
         async hidePopup(id) {
-            await axios.put(`http://localhost:3000/status/${id}`)
+            await axios.put(`https://subscribers-git-master-acioliwilson.vercel.app/status/${id}`)
             .then((response) => {
                 this.$router.go('/home')
                 console.log(response)
@@ -151,13 +151,13 @@ export default {
         },
         async getStatus() {
             const id = '66084f7849b117edf3a09175'
-            await axios.get(`http://localhost:3000/status/${id}`)
+            await axios.get(`https://subscribers-git-master-acioliwilson.vercel.app/status/${id}`)
             .then((response) => {
                 this.status = response.data
             }) .catch(error => { console.error(error) })
         },
         async showPopup(id) {
-            await axios.put(`http://localhost:3000/status/${id}`)
+            await axios.put(`https://subscribers-git-master-acioliwilson.vercel.app/status/${id}`)
             .then((response) => {
                 this.$router.go('/home')
                 console.log(response)
