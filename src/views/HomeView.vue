@@ -33,7 +33,7 @@
                     <table class="table table-striped" v-if="!loading">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col" class="count">#</th>
                                 <th scope="col">Nome</th>
                                 <th scope="col">E-mail</th>
                                 <th scope="col"></th>
@@ -41,7 +41,7 @@
                         </thead>
                         <tbody>
                             <tr v-for="(user, index) in users" :key="user._id">
-                                <td>{{ index+1 }}</td>
+                                <td class="count">{{ index+1 }}</td>
                                 <td>{{ user.name }}</td>
                                 <td>{{ user.email }}</td>
                                 <td>
@@ -372,5 +372,10 @@ th {
   .status {
     margin-top: 12px;
   }
+}
+@media screen and (max-width: 650px) {
+    .count {
+        display: none !important;
+    }
 }
 </style>
